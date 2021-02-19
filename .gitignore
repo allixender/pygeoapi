@@ -112,3 +112,8 @@ ENV/
 
 
 .DS_Store
+
+# alex
+_pygeoapi_env/
+dev-openapi.yml
+pygeoapi_dev.py

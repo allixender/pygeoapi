@@ -1,0 +1,317 @@
+# =================================================================
+#
+# Authors: Tom Kralidis <tomkralidis@gmail.com>
+#
+# Copyright (c) 2020 Tom Kralidis
+#
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation
+# files (the "Software"), to deal in the Software without
+# restriction, including without limitation the rights to use,
+# copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following
+# conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+# HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+#
+# =================================================================
+
+server:
+    bind:
+        host: 0.0.0.0
+        port: 5000
+    url: http://localhost:5000
+    mimetype: application/json; charset=UTF-8
+    encoding: utf-8
+    language: en-US
+    # cors: true
+    pretty_print: true
+    limit: 10
+    # templates:
+      # path: /path/to/Jinja2/templates
+      # static: /path/to/static/folder # css/js/img
+    map:
+        url: https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png
+        attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia maps</a> | Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+    # ogc_schemas_location: /opt/schemas.opengis.net
+
+logging:
+    level: ERROR
+    #logfile: /tmp/pygeoapi.log
+
+metadata:
+    identification:
+        title: Landscape Geoinformatics pygeoapi test instance
+        description: Landscape Geoinformatics, University of Tartu, provides API to geospatial data
+        keywords:
+            - geospatial
+            - data
+            - api
+            - soils
+        keywords_type: theme
+        terms_of_service: https://opendatacommons.org/licenses/odbl/1-0/
+        url: https://landscape-geoinformatics.ut.ee
+    license:
+        name: Open Data Commons Open Database License (ODbL) v1.0
+        url: https://opendatacommons.org/licenses/odbl/1-0/
+    provider:
+        name: Landscape Geoinformatics, University of Tartu, Estonia
+        url: https://landscape-geoinformatics.ut.ee
+    contact:
+        name: Kmoch, Alexander
+        position: Researcher
+        address: Vanemuise 46
+        city: Tartu
+        stateorprovince: Tartu
+        postalcode: 51014
+        country: Estonia
+        phone: +xx-xxx-xxx-xxxx
+        fax: +xx-xxx-xxx-xxxx
+        email: alexander.kmoch@ut.ee
+        url: https://landscape-geoinformatics.ut.ee
+        hours: Hours of Service
+        instructions: During hours of service.  Off on weekends.
+        role: pointOfContact
+
+resources:
+    obs:
+        type: collection
+        title: Observations
+        description: My cool observations
+        keywords:
+            - observations
+            - monitoring
+        context:
+            - datetime: https://schema.org/DateTime
+            - vocab: https://example.com/vocab#
+              stn_id: "vocab:stn_id"
+              value: "vocab:value"
+        links:
+            - type: text/csv
+              rel: canonical
+              title: data
+              href: https://github.com/mapserver/mapserver/blob/branch-7-0/msautotest/wxs/data/obs.csv
+              hreflang: en-US
+            - type: text/csv
+              rel: alternate
+              title: data
+              href: https://raw.githubusercontent.com/mapserver/mapserver/branch-7-0/msautotest/wxs/data/obs.csv
+              hreflang: en-US
+        extents:
+            spatial:
+                bbox: [-180,-90,180,90]
+                crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
+            temporal:
+                begin: 2000-10-30T18:24:39Z
+                end: 2007-10-30T08:57:29Z
+        providers:
+            - type: feature
+              name: CSV
+              data: tests/data/obs.csv
+              id_field: id
+              geometry:
+                  x_field: long
+                  y_field: lat
+
+
+    h3_elev_res_9:
+        type: collection
+        title: H3 encoded elevation at resolution 9
+        description: H3 encoded elevation at resolution 9
+        keywords:
+            - elevation
+            - H3
+        links:
+            - type: text/csv
+              rel: canonical
+              title: data
+              href: https://github.com/mapserver/mapserver/blob/branch-7-0/msautotest/wxs/data/obs.csv
+              hreflang: en-US
+        extents:
+            spatial:
+                bbox: [26.60649874, 57.69507424, 26.89595393, 57.98289276]
+                crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
+            temporal:
+                begin: 2011-11-11
+                end: null  # or empty (either means open ended)
+        providers:
+            - type: feature
+              name: CSVH3
+              data: tests/data/srtm_m30_eesti-17408_6144-H3_9.csv
+              id_field: h3_res_9
+              geometry:
+
+    h3_elev_res_8:
+        type: collection
+        title: H3 encoded elevation at resolution 8
+        description: H3 encoded elevation at resolution 8
+        keywords:
+            - elevation
+            - H3
+        links:
+            - type: text/csv
+              rel: canonical
+              title: data
+              href: https://github.com/mapserver/mapserver/blob/branch-7-0/msautotest/wxs/data/obs.csv
+              hreflang: en-US
+        extents:
+            spatial:
+                bbox: [26.60649874, 57.69507424, 26.89595393, 57.98289276]
+                crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
+            temporal:
+                begin: 2011-11-11
+                end: null  # or empty (either means open ended)
+        providers:
+            - type: feature
+              name: CSVH3
+              data: tests/data/srtm_m30_eesti-17408_6144-H3_8.csv
+              id_field: h3_res_8
+              geometry:
+
+    h3_elev_res_7:
+        type: collection
+        title: H3 encoded elevation at resolution 7
+        description: H3 encoded elevation at resolution 7
+        keywords:
+            - elevation
+            - H3
+        links:
+            - type: text/csv
+              rel: canonical
+              title: data
+              href: https://github.com/mapserver/mapserver/blob/branch-7-0/msautotest/wxs/data/obs.csv
+              hreflang: en-US
+        extents:
+            spatial:
+                bbox: [26.60649874, 57.69507424, 26.89595393, 57.98289276]
+                crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
+            temporal:
+                begin: 2011-11-11
+                end: null  # or empty (either means open ended)
+        providers:
+            - type: feature
+              name: CSVH3
+              data: tests/data/srtm_m30_eesti-17408_6144-H3_7.csv
+              id_field: h3_res_7
+              geometry:
+
+
+    rhealpix_elev_res_9:
+        type: collection
+        title: rHealPix encoded elevation at resolution 9
+        description: rHealPix encoded elevation at resolution 9
+        keywords:
+            - elevation
+            - rHealPix
+        links:
+            - type: text/csv
+              rel: canonical
+              title: data
+              href: https://github.com/mapserver/mapserver/blob/branch-7-0/msautotest/wxs/data/obs.csv
+              hreflang: en-US
+        extents:
+            spatial:
+                bbox: [26.61024292, 59.40557842, 26.7493647 , 59.5473251]
+                crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
+            temporal:
+                begin: 2011-11-11
+                end: null  # or empty (either means open ended)
+        providers:
+            - type: feature
+              name: CSVRHPIX
+              data: tests/data/srtm_m30_eesti-17408_512-RHPIX_9.csv
+              id_field: rhpix_res_9
+              geometry:
+
+
+    rhealpix_elev_res_8:
+        type: collection
+        title: rHealPix encoded elevation at resolution 8
+        description: rHealPix encoded elevation at resolution 8
+        keywords:
+            - elevation
+            - rHealPix
+        links:
+            - type: text/csv
+              rel: canonical
+              title: data
+              href: https://github.com/mapserver/mapserver/blob/branch-7-0/msautotest/wxs/data/obs.csv
+              hreflang: en-US
+        extents:
+            spatial:
+                bbox: [26.61024292, 59.40557842, 26.7493647 , 59.5473251]
+                crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
+            temporal:
+                begin: 2011-11-11
+                end: null  # or empty (either means open ended)
+        providers:
+            - type: feature
+              name: CSVRHPIX
+              data: tests/data/srtm_m30_eesti-17408_512-RHPIX_8.csv
+              id_field: rhpix_res_8
+              geometry:
+
+
+    rhealpix_elev_res_7:
+        type: collection
+        title: rHealPix encoded elevation at resolution 7
+        description: rHealPix encoded elevation at resolution 7
+        keywords:
+            - elevation
+            - rHealPix
+        links:
+            - type: text/csv
+              rel: canonical
+              title: data
+              href: https://github.com/mapserver/mapserver/blob/branch-7-0/msautotest/wxs/data/obs.csv
+              hreflang: en-US
+        extents:
+            spatial:
+                bbox: [26.61024292, 59.40557842, 26.7493647 , 59.5473251]
+                crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
+            temporal:
+                begin: 2011-11-11
+                end: null  # or empty (either means open ended)
+        providers:
+            - type: feature
+              name: CSVRHPIX
+              data: tests/data/srtm_m30_eesti-17408_512-RHPIX_7.csv
+              id_field: rhpix_res_7
+              geometry:
+
+
+    lakes:
+        type: collection
+        title: Large Lakes
+        description: lakes of the world, public domain
+        keywords:
+            - lakes
+        links:
+            - type: text/html
+              rel: canonical
+              title: information
+              href: http://www.naturalearthdata.com/
+              hreflang: en-US
+        extents:
+            spatial:
+                bbox: [-180,-90,180,90]
+                crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
+            temporal:
+                begin: 2011-11-11
+                end: null  # or empty (either means open ended)
+        providers:
+            - type: feature
+              name: GeoJSON
+              data: tests/data/ne_110m_lakes.geojson
+              id_field: id

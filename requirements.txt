@@ -6,3 +6,5 @@ pytz
 PyYAML
 rasterio
 unicodecsv
+h3
+rhealpixdggs

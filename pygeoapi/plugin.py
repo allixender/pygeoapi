@@ -36,25 +36,23 @@ LOGGER = logging.getLogger(__name__)
 #: Loads provider plugins to be used by pygeoapi,\
 #: formatters and processes available
 PLUGINS = {
-    'provider': {
-        'CSV': 'pygeoapi.provider.csv_.CSVProvider',
-        'Elasticsearch': 'pygeoapi.provider.elasticsearch_.ElasticsearchProvider',  # noqa
-        'GeoJSON': 'pygeoapi.provider.geojson.GeoJSONProvider',
-        'OGR': 'pygeoapi.provider.ogr.OGRProvider',
-        'PostgreSQL': 'pygeoapi.provider.postgresql.PostgreSQLProvider',
-        'SQLiteGPKG': 'pygeoapi.provider.sqlite.SQLiteGPKGProvider',
-        'MongoDB': 'pygeoapi.provider.mongo.MongoProvider',
-        'FileSystem': 'pygeoapi.provider.filesystem.FileSystemProvider',
-        'rasterio': 'pygeoapi.provider.rasterio_.RasterioProvider',
-        'xarray': 'pygeoapi.provider.xarray_.XarrayProvider',
-        'MVT': 'pygeoapi.provider.mvt.MVTProvider'
+    "provider": {
+        "CSV": "pygeoapi.provider.csv_.CSVProvider",
+        "CSVH3": "pygeoapi.provider.csv_h3.CSVH3Provider",
+        "CSVRHPIX": "pygeoapi.provider.csv_rhpix.CSVRHPIXProvider",
+        "Elasticsearch": "pygeoapi.provider.elasticsearch_.ElasticsearchProvider",  # noqa
+        "GeoJSON": "pygeoapi.provider.geojson.GeoJSONProvider",
+        "OGR": "pygeoapi.provider.ogr.OGRProvider",
+        "PostgreSQL": "pygeoapi.provider.postgresql.PostgreSQLProvider",
+        "SQLiteGPKG": "pygeoapi.provider.sqlite.SQLiteGPKGProvider",
+        "MongoDB": "pygeoapi.provider.mongo.MongoProvider",
+        "FileSystem": "pygeoapi.provider.filesystem.FileSystemProvider",
+        "rasterio": "pygeoapi.provider.rasterio_.RasterioProvider",
+        "xarray": "pygeoapi.provider.xarray_.XarrayProvider",
+        # "MVT": "pygeoapi.provider.mvt.MVTProvider",
     },
-    'formatter': {
-        'CSV': 'pygeoapi.formatter.csv_.CSVFormatter'
-    },
-    'process': {
-        'HelloWorld': 'pygeoapi.process.hello_world.HelloWorldProcessor'
-    }
+    "formatter": {"CSV": "pygeoapi.formatter.csv_.CSVFormatter"},
+    "process": {"HelloWorld": "pygeoapi.process.hello_world.HelloWorldProcessor"},
 }
 
 
@@ -68,29 +66,29 @@ def load_plugin(plugin_type, plugin_def):
     :returns: plugin object
     """
 
-    name = plugin_def['name']
+    name = plugin_def["name"]
 
     if plugin_type not in PLUGINS.keys():
-        msg = 'Plugin type {} not found'.format(plugin_type)
+        msg = "Plugin type {} not found".format(plugin_type)
         LOGGER.exception(msg)
         raise InvalidPluginError(msg)
 
     plugin_list = PLUGINS[plugin_type]
 
-    LOGGER.debug('Plugins: {}'.format(plugin_list))
+    LOGGER.debug("Plugins: {}".format(plugin_list))
 
-    if '.' not in name and name not in plugin_list.keys():
-        msg = 'Plugin {} not found'.format(name)
+    if "." not in name and name not in plugin_list.keys():
+        msg = "Plugin {} not found".format(name)
         LOGGER.exception(msg)
         raise InvalidPluginError(msg)
 
-    if '.' in name:  # dotted path
-        packagename, classname = name.rsplit('.', 1)
+    if "." in name:  # dotted path
+        packagename, classname = name.rsplit(".", 1)
     else:  # core formatter
-        packagename, classname = plugin_list[name].rsplit('.', 1)
+        packagename, classname = plugin_list[name].rsplit(".", 1)
 
-    LOGGER.debug('package name: {}'.format(packagename))
-    LOGGER.debug('class name: {}'.format(classname))
+    LOGGER.debug("package name: {}".format(packagename))
+    LOGGER.debug("class name: {}".format(classname))
 
     module = importlib.import_module(packagename)
     class_ = getattr(module, classname)
@@ -100,4 +98,5 @@ def load_plugin(plugin_type, plugin_def):
 
 class InvalidPluginError(Exception):
     """Invalid plugin"""
+
     pass
